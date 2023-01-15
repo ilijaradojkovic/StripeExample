@@ -37,7 +37,12 @@ public class Controller {
       return  Customer.retrieve(id).toJson();
     }
 
-
+    @DeleteMapping("/{id}")
+    public String deleteCustomer(@PathVariable("id") String id) throws StripeException {
+        Stripe.apiKey=stripeKey;
+        Customer customer = Customer.retrieve(id);
+        return customer.delete().toJson();
+    }
 
 }
 
