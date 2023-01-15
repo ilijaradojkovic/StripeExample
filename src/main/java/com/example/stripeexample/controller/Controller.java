@@ -14,7 +14,7 @@ import java.util.Map;
 public class Controller {
 
 
-    private String stripeKey ="sk_test_51M0N5GFtmfxzG6wMv5rF80PkxBXT7WTOC9fudwDsAdWwws4buKuvv7XlyNTrtIFlV7RkVOesXFLQ2hUUnmticZCd0016lhtl2c";
+    private final String  stripeKey ="sk_test_51M0N5GFtmfxzG6wMv5rF80PkxBXT7WTOC9fudwDsAdWwws4buKuvv7XlyNTrtIFlV7RkVOesXFLQ2hUUnmticZCd0016lhtl2c";
 
     @PostMapping
     public String createCustomer(@RequestBody MyCustomer myCustomer) throws StripeException {
@@ -29,6 +29,14 @@ public class Controller {
 
         return Customer.create(params).toJson();
     }
+
+    @GetMapping("/{id}")
+    public String getCustomer(@PathVariable("id") String id) throws StripeException {
+        Stripe.apiKey=stripeKey;
+
+      return  Customer.retrieve(id).toJson();
+    }
+
 
 
 }
