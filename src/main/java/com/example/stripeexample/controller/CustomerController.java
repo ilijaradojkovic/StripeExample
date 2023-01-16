@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/customer")
-public class Controller {
+public class CustomerController {
 
 
     private final String  stripeKey ="sk_test_51M0N5GFtmfxzG6wMv5rF80PkxBXT7WTOC9fudwDsAdWwws4buKuvv7XlyNTrtIFlV7RkVOesXFLQ2hUUnmticZCd0016lhtl2c";
