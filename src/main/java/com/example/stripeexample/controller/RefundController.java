@@ -16,6 +16,7 @@ public class RefundController {
     private final String  stripeKey ="sk_test_51M0N5GFtmfxzG6wMv5rF80PkxBXT7WTOC9fudwDsAdWwws4buKuvv7XlyNTrtIFlV7RkVOesXFLQ2hUUnmticZCd0016lhtl2c";
 
 
+    //Refund object works only with charges
     @PostMapping("/{id}")
     public String createRefund(@PathVariable("id") String chargeId) throws StripeException {
 
