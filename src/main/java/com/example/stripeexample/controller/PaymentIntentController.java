@@ -42,6 +42,8 @@ public class PaymentIntentController {
 
     }
 
+    //A PaymentIntent object can be canceled when it is in one of these statuses:
+    // requires_payment_method, requires_capture, requires_confirmation, requires_action or, in rare cases, processing.
     @DeleteMapping("/{id}")
     public String cancelPaymentIntent(@PathVariable("id") String id) throws StripeException {
         Stripe.apiKey = stripeKey;
