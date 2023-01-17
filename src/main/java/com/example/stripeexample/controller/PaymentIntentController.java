@@ -1,5 +1,6 @@
 package com.example.stripeexample.controller;
 
+import com.example.stripeexample.entity.payment_intent.MyPaymentIntent;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 //Stripe is heavily investing in PaymentIntents as the integration path going forward
 
+//A PaymentIntent guides you through the process of collecting a payment from your customer.
+//We recommend that you create exactly one PaymentIntent for each order or customer session in your system
+
 @RestController
 @RequestMapping("/payment-intent")
 public class PaymentIntentController {
@@ -17,24 +21,21 @@ public class PaymentIntentController {
     private  final String  stripeKey ="sk_test_51M0N5GFtmfxzG6wMv5rF80PkxBXT7WTOC9fudwDsAdWwws4buKuvv7XlyNTrtIFlV7RkVOesXFLQ2hUUnmticZCd0016lhtl2c";
 
 
-    @PostMapping("/{customerId}")
+    @PostMapping()
     //obavezna polja: currency,customer,paymentmethod bez ovoga nece da bude u stanju da mi idemo confirm
-    public String createPaymentIntent(
-
-            @PathVariable("customerId") String customerId
-
-    ) throws StripeException {
-
+    //When confirm=true is used during creation, it is equivalent to creating and confirming the PaymentIntent in the same call.
+    public String createPaymentIntent(@RequestBody MyPaymentIntent myPaymentIntent) throws StripeException {
+//PaymentIntentCreateParams or Map<String,Object>
         PaymentIntentCreateParams params=PaymentIntentCreateParams.builder()
-                .setCustomer(customerId)
-                .setAmount(500L)
-                .setCurrency("usd")
-                .setPaymentMethod("card_1MQtuTFtmfxzG6wM4KvJFrCp")
+                .setCustomer(myPaymentIntent.customerId())
+                .setAmount(myPaymentIntent.amount())
+                .setCurrency(myPaymentIntent.currency())
+                .setPaymentMethod(myPaymentIntent.paymentMethodId())
+                .setConfirm(false)
                 .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
-        //moramo da confirm kako bi prosla
-        paymentIntent.confirm();
+
         return paymentIntent.toJson();
 
     }
