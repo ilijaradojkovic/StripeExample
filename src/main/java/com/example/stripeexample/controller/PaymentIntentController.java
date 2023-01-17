@@ -1,6 +1,7 @@
 package com.example.stripeexample.controller;
 
 import com.example.stripeexample.entity.payment_intent.MyPaymentIntent;
+import com.example.stripeexample.entity.payment_intent.MyUpdatePaymentIntent;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
@@ -62,5 +63,18 @@ public class PaymentIntentController {
         PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
 
         return paymentIntent.toJson();
+    }
+
+    @PatchMapping()
+    public String updatePaymentInetnt(@RequestBody MyUpdatePaymentIntent myUpdatePaymentIntent) throws StripeException {
+        Stripe.apiKey = stripeKey;
+
+        PaymentIntent paymentIntent = PaymentIntent.retrieve("pi_3MQuhmFtmfxzG6wM0l0QE6Y0");
+
+
+
+
+        //PaymentIntent updatedPaymentIntent = paymentIntent.update(params);
+        return "";
     }
 }
