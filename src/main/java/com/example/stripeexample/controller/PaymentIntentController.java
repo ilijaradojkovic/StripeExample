@@ -50,8 +50,17 @@ public class PaymentIntentController {
                         id
                 );
 
-        PaymentIntent updatedPaymentIntent =
-                paymentIntent.cancel();
+        PaymentIntent updatedPaymentIntent = paymentIntent.cancel();
+
         return updatedPaymentIntent.toJson();
+    }
+
+    @GetMapping("/{id}")
+    public String retrivePaymentIntent(@PathVariable("id") String id) throws StripeException {
+        Stripe.apiKey = stripeKey;
+
+        PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
+
+        return paymentIntent.toJson();
     }
 }
