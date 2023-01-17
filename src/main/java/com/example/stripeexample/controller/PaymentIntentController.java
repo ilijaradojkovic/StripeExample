@@ -13,7 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-//Included in the returned PaymentIntent is a client secret, which the client side uses to securely complete the payment process instead of passing the entire PaymentIntent object.
+//Included in the returned PaymentIntent is a client secret, which the client side
+// uses to securely complete the payment process instead of passing the entire PaymentIntent object.
 // You can use different approaches to pass the client secret to the client side.
 //Stripe uses a PaymentIntent object to represent your intent to collect payment from a customer,
 // tracking charge attempts and payment state changes throughout the process.
@@ -22,10 +23,15 @@ import java.util.Map;
 //string
 //RETRIEVABLE WITH PUBLISHABLE KEY
 //The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.
-//The client secret can be used to complete a payment from your frontend. It should not be stored, logged, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
+//The client secret can be used to complete a payment from your frontend. It should not be stored,
+// logged, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
 
 //A PaymentIntent guides you through the process of collecting a payment from your customer.
 //We recommend that you create exactly one PaymentIntent for each order or customer session in your system
+
+//Each PaymentIntent typically correlates with a single shopping cart or customer session in your application.
+// The PaymentIntent encapsulates details about the transaction, such as the supported payment methods, the amount to collect,
+// and the desired currency.
 
 @RestController
 @RequestMapping("/payment-intent")

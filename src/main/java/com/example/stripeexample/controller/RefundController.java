@@ -15,10 +15,10 @@ import java.util.Map;
 public class RefundController {
     private final String  stripeKey ="sk_test_51M0N5GFtmfxzG6wMv5rF80PkxBXT7WTOC9fudwDsAdWwws4buKuvv7XlyNTrtIFlV7RkVOesXFLQ2hUUnmticZCd0016lhtl2c";
 
+    //Da bi refund radio  mora uplata da prodje,success mora biti
 
-    //Refund object works only with charges
-    @PostMapping("/{id}")
-    public String createRefund(@PathVariable("id") String chargeId) throws StripeException {
+    @PostMapping("/charge/{id}")
+    public String createRefundCharge(@PathVariable("id") String chargeId) throws StripeException {
 
 
         Stripe.apiKey =stripeKey;
@@ -32,6 +32,23 @@ public class RefundController {
         Refund refund = Refund.create(params);
         return refund.toJson();
     }
+
+    @PostMapping("/payment-intent/{id}")
+    public String createRefundPaymentIntent(@PathVariable("id") String paymentId) throws StripeException {
+
+
+        Stripe.apiKey =stripeKey;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put(
+                "payment_intent",
+                paymentId
+        );
+
+        Refund refund = Refund.create(params);
+        return refund.toJson();
+    }
+
 
     @GetMapping("/{id}")
     public String retriveRefund(@PathVariable("id") String id) throws StripeException {
