@@ -5,11 +5,24 @@ import com.example.stripeexample.entity.payment_intent.MyUpdatePaymentIntent;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.PaymentIntentCollection;
 import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 
+
+//Included in the returned PaymentIntent is a client secret, which the client side uses to securely complete the payment process instead of passing the entire PaymentIntent object.
+// You can use different approaches to pass the client secret to the client side.
+//Stripe uses a PaymentIntent object to represent your intent to collect payment from a customer,
+// tracking charge attempts and payment state changes throughout the process.
 //Stripe is heavily investing in PaymentIntents as the integration path going forward
+//client_secret
+//string
+//RETRIEVABLE WITH PUBLISHABLE KEY
+//The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.
+//The client secret can be used to complete a payment from your frontend. It should not be stored, logged, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
 
 //A PaymentIntent guides you through the process of collecting a payment from your customer.
 //We recommend that you create exactly one PaymentIntent for each order or customer session in your system
@@ -109,5 +122,17 @@ public class PaymentIntentController {
         PaymentIntent updatedPaymentIntent = paymentIntent.capture();
 
         return updatedPaymentIntent.toJson();
+    }
+
+
+    @GetMapping
+    public String getAllPaymentIntents() throws StripeException {
+        Stripe.apiKey = stripeKey;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("limit", 3);
+
+        PaymentIntentCollection paymentIntents = PaymentIntent.list(params);
+        return paymentIntents.toJson();
     }
 }
