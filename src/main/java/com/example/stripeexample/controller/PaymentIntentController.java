@@ -77,4 +77,19 @@ public class PaymentIntentController {
         //PaymentIntent updatedPaymentIntent = paymentIntent.update(params);
         return "";
     }
+
+   // Confirm that your customer intends to pay with current or provided payment method.
+   // Upon confirmation, the PaymentIntent will attempt to initiate a payment.
+    @PatchMapping("/{id}")
+    public String confirmPaymentIntent(@PathVariable("id") String id) throws StripeException {
+        Stripe.apiKey = stripeKey;
+
+        PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
+
+
+
+        PaymentIntent updatedPaymentIntent =
+                paymentIntent.confirm();
+        return paymentIntent.toJson();
+    }
 }
