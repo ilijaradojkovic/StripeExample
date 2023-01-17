@@ -92,4 +92,19 @@ public class PaymentIntentController {
                 paymentIntent.confirm();
         return paymentIntent.toJson();
     }
+
+    //Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
+    //Uncaptured PaymentIntents will be canceled a set number of days after they are created (7 by default).
+    //Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
+    //Uncaptured PaymentIntents will be canceled a set number of days after they are created (7 by default).
+    @PatchMapping("/capture/{id}")
+    public String capturePaymentIntent(@PathVariable("id") String id) throws StripeException {
+        Stripe.apiKey = stripeKey;
+
+        PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
+
+        PaymentIntent updatedPaymentIntent = paymentIntent.capture();
+
+        return updatedPaymentIntent.toJson();
+    }
 }
