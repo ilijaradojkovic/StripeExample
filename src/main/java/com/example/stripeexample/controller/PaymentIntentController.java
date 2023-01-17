@@ -25,6 +25,7 @@ public class PaymentIntentController {
     //obavezna polja: currency,customer,paymentmethod bez ovoga nece da bude u stanju da mi idemo confirm
     //When confirm=true is used during creation, it is equivalent to creating and confirming the PaymentIntent in the same call.
     public String createPaymentIntent(@RequestBody MyPaymentIntent myPaymentIntent) throws StripeException {
+        Stripe.apiKey=stripeKey;
 //PaymentIntentCreateParams or Map<String,Object>
         PaymentIntentCreateParams params=PaymentIntentCreateParams.builder()
                 .setCustomer(myPaymentIntent.customerId())
