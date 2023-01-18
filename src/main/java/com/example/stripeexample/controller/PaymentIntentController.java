@@ -46,13 +46,15 @@ public class PaymentIntentController {
     //When confirm=true is used during creation, it is equivalent to creating and confirming the PaymentIntent in the same call.
     public String createPaymentIntent(@RequestBody MyPaymentIntent myPaymentIntent) throws StripeException {
         Stripe.apiKey=stripeKey;
-//PaymentIntentCreateParams or Map<String,Object>
-        PaymentIntentCreateParams params=PaymentIntentCreateParams.builder()
+        //ako stavimo confirm na true i capture method na manual onda je u stanju requires capture,pa ako odradimo capture on ide u success
+        PaymentIntentCreateParams params= PaymentIntentCreateParams.builder()
+                .setCaptureMethod(PaymentIntentCreateParams.CaptureMethod.MANUAL)
                 .setCustomer(myPaymentIntent.customerId())
                 .setAmount(myPaymentIntent.amount())
                 .setCurrency(myPaymentIntent.currency())
                 .setPaymentMethod(myPaymentIntent.paymentMethodId())
-                .setConfirm(false)
+                .setConfirm(true)
+
                 .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);

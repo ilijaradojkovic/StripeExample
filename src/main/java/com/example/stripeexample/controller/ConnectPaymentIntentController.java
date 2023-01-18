@@ -26,11 +26,13 @@ public class ConnectPaymentIntentController {
 
         PaymentIntentCreateParams paymentIntentParams =
                 PaymentIntentCreateParams.builder()
+                        .setCaptureMethod(PaymentIntentCreateParams.CaptureMethod.MANUAL)
                         .setAmount(myConnectPaymentIntent.toBePayedAmount())
                         .setCurrency("eur")
                         .setCustomer(myConnectPaymentIntent.customerId())
                         .setPaymentMethod(myConnectPaymentIntent.paymentMethodId())
-                        .setApplicationFeeAmount(100L)
+                        .setApplicationFeeAmount(myConnectPaymentIntent.fee())
+                        .setConfirm(true)
                         .setTransferData(
                                 PaymentIntentCreateParams.TransferData.builder()
                                         .setDestination(myConnectPaymentIntent.accountId())
