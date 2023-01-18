@@ -111,3 +111,62 @@ Returns the SetupIntent’s client secret, the Ephemeral Key’s secret, the Cus
 
 
 
+Standard account:
+A Stripe account controlled directly by the account holder (that is, your platform’s user).
+A user with a Standard account has a relationship with Stripe, is able to log into the Stripe Dashboard, can process charges on their own,
+ and can disconnect their account from your platform.
+
+Express account:
+An account where Stripe handles user onboarding, account management, and identity verification.
+ Your platform can manage payout schedules, customize the flow of funds, and control branding.
+
+Custom account: This account is almost completely invisible to the account holder and Stripe has no direct contact with them.
+ Custom accounts require the most integration effort and are suitable for platforms who want to control the entire user experience.
+
+ Capabilities define what your connected account can do and track whether they’ve met the verification requirements to do so.
+  Connected accounts with the transfers capability can accept transfers of funds from your platform,
+   while connected accounts with the card_payments capability can directly process payments without routing the funds through your platform.
+   To know which capabilities Stripe recommends for your business model, refer to your completed platform profile.
+
+If you’re onboarding Express accounts, Stripe collects all the user requirements information for you (excluding any fields you choose to pre-fill).
+For instructions on how to onboard Express accounts, refer to Using Connect with Express accounts.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

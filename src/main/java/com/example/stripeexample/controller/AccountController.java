@@ -7,6 +7,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Account;
 import com.stripe.model.AccountCollection;
 import com.stripe.param.AccountCreateParams;
+import com.stripe.param.AccountUpdateParams;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -30,11 +31,25 @@ public class AccountController {
         Stripe.apiKey = stripeKey;
 
 
+        Map<String, Object> cardPayments =
+                new HashMap<>();
+        cardPayments.put("requested", true);
+        Map<String, Object> transfers = new HashMap<>();
+        transfers.put("requested", true);
+        Map<String, Object> capabilities =
+                new HashMap<>();
+        capabilities.put("card_payments", cardPayments);
+        capabilities.put("transfers", transfers);
+
         AccountCreateParams accountCreateParams=AccountCreateParams.builder()
                         .setEmail(myAccount.email())
                         .setType(myAccount.type())
                         .setCountry(myAccount.country())
                         .setBusinessType(myAccount.business_type())
+                        .setCapabilities(AccountCreateParams.Capabilities.builder()
+                            .setTransfers(AccountCreateParams.Capabilities.Transfers.builder().setRequested(true).build())
+                            .setCardPayments(AccountCreateParams.Capabilities.CardPayments.builder().setRequested(true).build())
+                                .build())
 
                         .build();
 
@@ -88,5 +103,26 @@ public class AccountController {
 
         AccountCollection accounts = Account.list(params);
         return accounts.toJson();
+    }
+
+    @PatchMapping()
+    public String acceptTermsOfService() throws StripeException {
+        Stripe.apiKey = stripeKey;
+
+        Account resource = Account.retrieve("{{CONNECTED_STRIPE_ACCOUNT_ID}}");
+        AccountUpdateParams params =
+                AccountUpdateParams
+                        .builder()
+                        .setTosAcceptance(
+                                AccountUpdateParams.TosAcceptance
+                                        .builder()
+                                        .setDate(1609798905L)
+                                        .setIp("8.8.8.8")
+                                        .build()
+                        )
+                        .build();
+
+        Account account = resource.update(params);
+        return account.toJson();
     }
 }

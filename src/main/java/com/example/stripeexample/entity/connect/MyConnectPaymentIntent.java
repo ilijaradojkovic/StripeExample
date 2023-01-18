@@ -4,6 +4,7 @@ public record  MyConnectPaymentIntent(
         String accountId,
         Long accountAmount,
         Long toBePayedAmount,
-        String customerId
+        String customerId,
+        String paymentMethodId
 ){
 }

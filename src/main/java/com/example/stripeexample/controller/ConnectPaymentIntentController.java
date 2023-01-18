@@ -22,16 +22,18 @@ public class ConnectPaymentIntentController {
 
         Stripe.apiKey=stripeKey;
 
+        //ne moze fee da stoji  i set amount u transferData
+
         PaymentIntentCreateParams paymentIntentParams =
                 PaymentIntentCreateParams.builder()
                         .setAmount(myConnectPaymentIntent.toBePayedAmount())
                         .setCurrency("eur")
                         .setCustomer(myConnectPaymentIntent.customerId())
+                        .setPaymentMethod(myConnectPaymentIntent.paymentMethodId())
                         .setApplicationFeeAmount(100L)
                         .setTransferData(
                                 PaymentIntentCreateParams.TransferData.builder()
                                         .setDestination(myConnectPaymentIntent.accountId())
-                                        .setAmount(myConnectPaymentIntent.accountAmount())
                                         .build())
                         .build();
 

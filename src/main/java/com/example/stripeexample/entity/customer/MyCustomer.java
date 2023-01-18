@@ -1,4 +1,4 @@
-package com.example.stripeexample.entity;
+package com.example.stripeexample.entity.customer;
 
 public record MyCustomer (
      String email,
